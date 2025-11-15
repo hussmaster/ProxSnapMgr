@@ -3,6 +3,8 @@ from proxmoxer import ProxmoxAPI
 import requests, os, inquirer
 from getVMs import *
 from prompts import *
+from snapshotVM import *
+from lxcCheck import checkMPLXC
 
 load_dotenv()
 
@@ -16,6 +18,7 @@ tokName = os.environ.get("TOKEN_NAME")
 #Setup ENV with proxmox api key - done
 #Verify connectivity with Proxmox - done
 #Try and pull some details from a VM - done
+#NEED to check if a VM is an LXC, if so, check if it has a mountpoint, remove from the list
 #Come up with selection for actions ie. snapshotting VMs, deleting snapshots, powering down
 
 
@@ -29,14 +32,25 @@ def main():
     for node in nodes:
         node_name = node['node']
         VMs = proxHost.cluster.resources.get(type='vm')
+        #Get list of all VMs
         returnVMList = get_VMs(VMs)
+        #Append to the list above
         vmList.extend(returnVMList)
 
     #Get selected VMs
+    print("What VMs are we working with?")
     selectedVMs = vmChoice(vmList)
-    print(selectedVMs)
-    for vm in selectedVMs:
-        print(vm[0])
+    validVMs = checkMPLXC(selectedVMs, proxHost)
+    print("Selected...")
+    for vm in validVMs:
+        print(f"{vm[0]} {vm[1]}")
+    action = proxActions()
+    #Extract value out of returned dict
+    action = (list(action.values())[0])
+    if action == "Snapshot":
+        snapshotVM(validVMs, proxHost)
+    elif action == "Delete Snapshot":
+        pass
 
 
 

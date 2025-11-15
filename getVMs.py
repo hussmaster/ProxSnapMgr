@@ -10,10 +10,10 @@ def get_VMs(VMs):
         vmID = {vm['vmid']}.pop()
         vmName = {vm['name']}.pop()
         templateStatus = {vm['template']}.pop()
-        print(vm)
+        vmNode = {vm['node']}.pop()
         if templateStatus != 1:
             #Append tuple of each VM to the VM list
-            vmTup = (vmID, vmName, vmType, vmStatus)
+            vmTup = (vmID, vmName, vmType, vmStatus, vmNode)
             vmlist.append(vmTup)
     return vmlist
             

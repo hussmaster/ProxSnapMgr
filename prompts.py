@@ -18,3 +18,21 @@ def vmChoice(vmList):
             vmChoiceList.append(item)
     #Return list of tuples(ID, Name, type, status)
     return vmChoiceList
+
+#Function to get snapshot name
+def snapName():
+    questions = [
+        inquirer.Text("SnapName", message="Name for snapshot?", default="updates")
+    ]
+
+    snapAnswer = inquirer.prompt(questions)
+    return snapAnswer
+
+#Function to select what to do, snapshot, remove snapshot etc
+def proxActions():
+    questions = [
+        inquirer.List("action", message="What do you want to do?", choices=["Snapshot","Delete Snapshot"])
+    ]
+
+    actionAnswer = inquirer.prompt(questions)
+    return actionAnswer
