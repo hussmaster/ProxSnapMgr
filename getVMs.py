@@ -1,5 +1,3 @@
-
-
 def get_VMs(VMs):
     vmlist = []
     for vm in VMs:

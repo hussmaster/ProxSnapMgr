@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from proxmoxer import ProxmoxAPI
-import requests, os, inquirer
+import os
 from getVMs import *
 from prompts import *
 from snapshotVM import *
@@ -18,8 +18,9 @@ tokName = os.environ.get("TOKEN_NAME")
 #Setup ENV with proxmox api key - done
 #Verify connectivity with Proxmox - done
 #Try and pull some details from a VM - done
-#NEED to check if a VM is an LXC, if so, check if it has a mountpoint, remove from the list
+#NEED to check if a VM is an LXC, if so, check if it has a mountpoint, remove from the list - done
 #Come up with selection for actions ie. snapshotting VMs, deleting snapshots, powering down
+#Need to error check if snapshot has the same name as existing snapshot
 
 
 def main():

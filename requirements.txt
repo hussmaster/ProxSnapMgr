@@ -1,0 +1,4 @@
+dotenv==0.9.9
+inquirer==3.4.1
+proxmoxer==2.2.0
+
