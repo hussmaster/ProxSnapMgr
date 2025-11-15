@@ -5,3 +5,4 @@ from proxmoxer import ProxmoxAPI
 #Implement 
 #Maybe use this? # Get the list of snapshots for the VM
 #snapshots = proxmox.nodes('node_name').qemu(vm_id).snapshot.get()
+#This works ^ just need to pass in node name, vm ID
