@@ -25,6 +25,4 @@ def checkMPLXC(VMlist, proxHost):
             else:
                 print(f"Removed {vm[1]} from list as it has a mount point at {(list(mpValue.values())[0])}")
                 print("Cannot take snapshots of LXCs with a mount point unless you remove, snap, re-add")
-    print(returnList)
-    input()
     return returnList

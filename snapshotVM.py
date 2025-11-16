@@ -1,24 +1,58 @@
 from proxmoxer import ProxmoxAPI
 from prompts import snapName
+from snapProps import checkSnap
 import time
 
-def snapshotVM(VMlist, proxNode):
+def snapshotVM(VMlist, proxHost):
     snapShotName = snapName()
     #Extract snapshot name from returned dict
     snapShotName = (list(snapShotName.values())[0])
     for vm in VMlist:
+        vmID = vm[0]
+        vmName = vm[1]
+        vmType = vm[2]
+        proxNode = vm[4]
         #Check if it's a vm or lxc
-        if vm[2] == 'qemu':
-            try:
-                proxNode.nodes(vm[4]).qemu(vm[0]).snapshot.post(snapname=snapShotName, vmstate=1)
-                print(f"Snapshot {snapShotName} created successfully on {vm[1]}")
-            except Exception as e:
-                print(f"Failed to create snapshot for: {e}")
-        elif vm[2] == 'lxc':
-            try:
-                proxNode.nodes(vm[4]).lxc(vm[0]).snapshot.post(snapname=snapShotName)
-                print(f"Snapshot {snapShotName} created successfully on {vm[1]}")
-            except Exception as e:
-                print(f"Failed to create snapshot for: {e}")
+        if vmType == 'qemu':
+            #Checks to see if snapshot name already exists
+            snapCheck = checkSnap(vmID, vmType, proxNode, proxHost, snapShotName)
+            if snapCheck == 1:
+                while snapCheck == 1:
+                    print(f'Snap name "{snapShotName}" already exists on {vmName}')
+                    print('Select a new snapshot name')
+                    newSnapName = snapName()
+                    newSnapName = (list(newSnapName.values())[0])
+                    snapCheck = checkSnap(vmID, vmType, proxNode, proxHost, newSnapName)
+                snap(proxHost, vmID, vmType, vmName, newSnapName, proxNode)
+            else:
+                snap(proxHost, vmID, vmType, vmName, snapShotName, proxNode)
+        elif vmType == 'lxc':
+            #Checks to see if snapshot name already exists
+            snapCheck = checkSnap(vmID, vmType, proxNode, proxHost, snapShotName)
+            if snapCheck == 1:
+                while snapCheck == 1:
+                    print(f'Snap name "{snapShotName}" already exists on {vmName}')
+                    print('Select a new snapshot name')
+                    newSnapName = snapName()
+                    newSnapName = (list(newSnapName.values())[0])
+                    snapCheck = checkSnap(vmID, vmType, proxNode, proxHost, newSnapName)
+                snap(proxHost, vmID, vmType, vmName, newSnapName, proxNode)
+            else:
+                snap(proxHost, vmID, vmType, vmName, snapShotName, proxNode)
         #Used to slow for storage
         time.sleep(2)
+
+#Helper function to create snapshot. 
+def snap(proxHost, vmID, vmType, vmName, snapName, proxNode):
+    if vmType == 'qemu':
+        try:
+            proxHost.nodes(proxNode).qemu(vmID).snapshot.post(snapname=snapName, vmstate=1)
+            print(f"Snapshot {snapName} created successfully on {vmName}")
+        except Exception as e:
+            print(f"Failed to create snapshot for: {e}")
+    elif vmType == "lxc":
+        try:
+            proxHost.nodes(proxNode).lxc(vmID).snapshot.post(snapname=snapName)
+            print(f"Snapshot {snapName} created successfully on {vmName}")
+        except Exception as e:
+            print(f"Failed to created snapshot for: {e}")
