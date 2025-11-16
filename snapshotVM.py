@@ -3,6 +3,7 @@ from prompts import snapName
 from snapProps import checkSnap
 import time
 
+#Takes snapshot
 def snapshotVM(VMlist, proxHost):
     snapShotName = snapName()
     #Extract snapshot name from returned dict

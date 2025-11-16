@@ -15,3 +15,16 @@ def checkSnap(vmID, vmType, proxNode, proxHost, snapName):
             if snap['name'] == snapName:
                 value = 1
     return value
+
+#Returns list of snapshots
+def getSnaps(proxHost, vmID, vmType, proxNode):
+    snaps = []
+    if vmType == 'qemu':
+        snapshots = proxHost.nodes(proxNode).qemu(vmID).snapshot.get()
+        for snap in snapshots:
+            snaps.append(snap['name'])
+    elif vmType == 'lxc':
+        snapshots = proxHost.nodes(proxNode).lxc(vmID).snapshot.get()
+        for snap in snapshots:
+            snaps.append(snap['name'])
+    return snaps

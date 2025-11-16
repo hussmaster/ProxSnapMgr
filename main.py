@@ -1,9 +1,10 @@
 from dotenv import load_dotenv
 from proxmoxer import ProxmoxAPI
-import os
+import os, sys
 from getVMs import *
 from prompts import *
 from snapshotVM import *
+from removeSnapshotVM import removeSnap
 from lxcCheck import checkMPLXC
 
 load_dotenv()
@@ -20,7 +21,7 @@ tokName = os.environ.get("TOKEN_NAME")
 #Try and pull some details from a VM - done
 #NEED to check if a VM is an LXC, if so, check if it has a mountpoint, remove from the list - done
 #Come up with selection for actions ie. snapshotting VMs, deleting snapshots, powering down
-#Need to error check if snapshot has the same name as existing snapshot
+#Need to error check if snapshot has the same name as existing snapshot - done
 
 
 def main():
@@ -51,7 +52,9 @@ def main():
     if action == "Snapshot":
         snapshotVM(validVMs, proxHost)
     elif action == "Delete Snapshot":
-        pass
+        removeSnap(validVMs, proxHost)
+    elif action == "Exit":
+        sys.exit()
 
 
 

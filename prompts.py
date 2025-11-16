@@ -31,7 +31,25 @@ def snapName():
 #Function to select what to do, snapshot, remove snapshot etc
 def proxActions():
     questions = [
-        inquirer.List("action", message="What do you want to do?", choices=["Snapshot","Delete Snapshot"])
+        inquirer.List("action", message="What do you want to do?", choices=["Snapshot","Delete Snapshot", "Exit"])
+    ]
+
+    actionAnswer = inquirer.prompt(questions)
+    return actionAnswer
+
+#Prompts user to select which snapshot to remove
+def removeSnapChoice(vmName, snapList):
+    questions = [
+        inquirer.List("snap", message=f"Snapshots for {vmName}, which to remove?", choices=snapList)
+    ]
+
+    removeAnswer = inquirer.prompt(questions)
+    return removeAnswer
+
+#Keeps user in the delete snapshot loop
+def removeLoop():
+    questions = [
+        inquirer.List("action", message="Keep deleting snaps?", choices=["yes", "no"])
     ]
 
     actionAnswer = inquirer.prompt(questions)
