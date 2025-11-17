@@ -64,7 +64,7 @@ python3 src/main.py
 
 Selection Screen
 
-![Selection Screen](/screenshots/selection.png)
+![Selection Screen](/screenshots/selections.png)
 
 Resource selection
 
