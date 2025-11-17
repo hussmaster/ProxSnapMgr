@@ -63,15 +63,19 @@ python3 src/main.py
 ### Screenshots
 
 Selection Screen
+
 ![Selection Screen](/screenshots/selection.png)
 
 Resource selection
+
 ![Resource Selection](/screenshots/snapshot.png)
 
 Snapshot creation
+
 ![Snapshot Name](/screenshots/snapshotname.png)
 
 Removing snapshot
+
 ![Remove Snapshot](/screenshots/removesnap.png)
 
 
