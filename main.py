@@ -14,7 +14,6 @@ apiUser = os.environ.get("API_USER")
 tokName = os.environ.get("TOKEN_NAME")
 
 
-
 def main():
     #Connect to proxmox
     proxHost = ProxmoxAPI(hostIP, user=apiUser, token_name=tokName, token_value=apiTok, verify_ssl=False)

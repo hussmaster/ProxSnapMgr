@@ -3,13 +3,6 @@ from snapProps import getSnaps
 from prompts import removeSnapChoice
 import time
 
-#TODO
-#Setup remove snapshot logic
-#Implement 
-#Maybe use this? # Get the list of snapshots for the VM
-#snapshots = proxmox.nodes('node_name').qemu(vm_id).snapshot.get()
-#This works ^ just need to pass in node name, vm ID
-
 #Removes snapshot
 def removeSnap(VMList, proxHost):
 
