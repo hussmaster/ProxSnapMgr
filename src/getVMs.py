@@ -20,7 +20,7 @@ def get_VMs(VMs):
             
 #Function to get list of resources to work with
 def listVMChoice(vmList, proxHost):
-    print("What resources are we working with?")
+    print("What resources are we working with? Spacebar to select, enter to proceed")
     selectedVMs = vmChoice(vmList)
     #Removes any LXCs with invalid mount points
     validVMs = checkMPLXC(selectedVMs, proxHost)

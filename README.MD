@@ -46,6 +46,19 @@ cd ProxSnapMgr
 
 3. Create a .env file in the root of the directory. Use the .env.example file as a guide. 
 
-4. 
+### Running the program
+
+After cloning the repository, installing the required python packages, and editing the .env file. You can run the program in two ways
+
+1. Make main.sh exectuable and run the main.sh script
+```
+chmod +x main.sh
+./main.sh
+```
+2. Or you can run the python program directly
+```
+python3 src/main.py
+```
+
 
 
