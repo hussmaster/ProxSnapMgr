@@ -1,6 +1,6 @@
 from proxmoxer import ProxmoxAPI
 from prompts import snapName
-from snapProps import checkSnap
+from snapProps import checkSnap, getSnaps
 import time
 
 #Takes snapshot
@@ -45,15 +45,25 @@ def snapshotVM(VMlist, proxHost):
 
 #Helper function to create snapshot. 
 def snap(proxHost, vmID, vmType, vmName, snapName, proxNode):
+    currentSnaps = getSnaps(proxHost, vmID, vmType, proxNode)
     if vmType == 'qemu':
         try:
             proxHost.nodes(proxNode).qemu(vmID).snapshot.post(snapname=snapName, vmstate=1)
-            print(f"Snapshot {snapName} created successfully on {vmName}")
+            #Loop to check when snapshot has been created
+            while snapName not in currentSnaps:
+                print(f"Creating '{snapName}' snapshot on {vmName}...")
+                time.sleep(2)
+                currentSnaps = getSnaps(proxHost, vmID, vmType, proxNode)
+            print(f"Snapshot '{snapName}' created successfully on {vmName}")
         except Exception as e:
             print(f"Failed to create snapshot for: {e}")
     elif vmType == "lxc":
         try:
             proxHost.nodes(proxNode).lxc(vmID).snapshot.post(snapname=snapName)
-            print(f"Snapshot {snapName} created successfully on {vmName}")
+            while snapName not in currentSnaps:
+                print(f"Creating '{snapName}' snapshot on {vmName}...")
+                time.sleep()
+                currentSnaps = getSnaps(proxHost, vmID, vmType, proxNode)
+            print(f"Snapshot '{snapName}' created successfully on {vmName}")
         except Exception as e:
             print(f"Failed to created snapshot for: {e}")
