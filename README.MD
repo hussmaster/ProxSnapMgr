@@ -4,7 +4,7 @@ This will utilize the python package **proxmoxer**. This is a community maintain
 
 The primary functionality of this project is the ability to manage snapshots of resources. Snapshotting multiple VMs/LXCs quickly as well as snapshot removal. When doing maintenance in my homelab I like to do updates on multiple machines at once so I wanted a way to quickly do this rather than go through the GUI one at a time. I also wanted the ability to only remove snapshots from certain VMs after updating. 
 
-### Requirements
+## Requirements
 
 ```
 pip install -r requirements.txt
@@ -28,7 +28,7 @@ API_USER = "<username@pve>"
 TOKEN_NAME = "<token name>"
 ```
 
-### Installation
+## Installation
 
 To setup and use this project:
 
@@ -46,7 +46,7 @@ cd ProxSnapMgr
 
 3. Create a .env file in the root of the directory. Use the .env.example file as a guide. 
 
-### Running the program
+## Running the program
 
 After cloning the repository, installing the required python packages, and editing the .env file. You can run the program in two ways
 
@@ -60,7 +60,7 @@ chmod +x main.sh
 python3 src/main.py
 ```
 
-### Screenshots
+## Screenshots
 
 Selection Screen
 
